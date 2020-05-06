@@ -5,52 +5,62 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.MainController">
-   <children>
-      <VBox alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
-         <children>
-            <Label text="Useful Utils">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.MainController">
+   <VBox alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0"
+         AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
+         AnchorPane.topAnchor="20.0">
+      <opaqueInsets>
+         <Insets/>
+      </opaqueInsets>
+      <Label text="Useful Utils">
+         <font>
+            <Font name="System Bold" size="24.0"/>
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="164.0" prefWidth="500.0" spacing="20.0">
+         <Label text="Select util:">
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </Label>
+         <ChoiceBox fx:id="utilsChoiceBox" prefWidth="150.0"/>
+      </HBox>
+      <Pane fx:id="utilsContainer" prefHeight="558.0" prefWidth="500.0" VBox.vgrow="NEVER">
+         <VBox id="0" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false"/>
+         <VBox id="1" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false"/>
+         <VBox id="2" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0" spacing="10.0">
+               <Label text="Font configuration file:" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="250.0" />
+               <Label fx:id="fontFileNameLabel" prefHeight="100.0" prefWidth="250.0" text="empty" textFill="RED"/>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <Label text="XOffset"/>
+               <TextField fx:id="xOffsetField" disable="true" prefHeight="25.0" prefWidth="65.0"/>
+               <Label text="YOffset"/>
+               <TextField fx:id="yOffsetField" disable="true" prefHeight="25.0" prefWidth="65.0"/>
+               <Label text="XAdvanced"/>
+               <TextField fx:id="xAdvancedField" disable="true" prefHeight="25.0" prefWidth="65.0"/>
+            </HBox>
+            <Label fx:id="dragBox" alignment="CENTER" onDragDropped="#processDraggedFile"
+                   onDragOver="#onDragOver" prefHeight="300.0" prefWidth="500.0"
+                   style="-fx-background-color: #cccccc;" text="Please drag-n-drop font config file"
+                   textFill="#00000080">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="20.0"/>
                </font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="164.0" prefWidth="500.0" spacing="20.0">
-               <children>
-                  <Label text="Select util:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="utilsChoiceBox" prefWidth="150.0" />
-               </children>
-            </HBox>
-            <Pane fx:id="utilsContainer" prefHeight="558.0" prefWidth="500.0" VBox.vgrow="NEVER">
-               <children>
-                  <VBox id="0" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false" />
-                  <VBox id="1" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false" />
-                  <VBox id="2" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false">
-                     <children>
-                        <Label text="Font configuration file" />
-                        <TextArea onDragDropped="#processDraggedFile" prefHeight="200.0" prefWidth="200.0" promptText="Please drag font config file" />
-                        <CheckBox mnemonicParsing="false" onAction="#processOverrideConfig" text="Override existing config" />
-                     </children>
-                  </VBox>
-                  <VBox id="3" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false" />
-               </children>
-            </Pane>
-            <Button mnemonicParsing="false" onAction="#execute" text="Start" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-   </children>
+            <CheckBox fx:id="overrideCheckBox" disable="true" text="Override existing config"/>
+         </VBox>
+         <VBox id="3" alignment="CENTER" prefHeight="215.0" prefWidth="500.0" spacing="20.0" visible="false"/>
+      </Pane>
+      <Button fx:id="startBtn" disable="true" onAction="#execute" text="Start"/>
+   </VBox>
 </AnchorPane>

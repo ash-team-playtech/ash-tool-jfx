@@ -10,7 +10,7 @@ public abstract class AbstractParser {
 
     private String path;
 
-    protected void setPath(String path) {
+    public void setPath(String path) {
         this.path = path;
     }
 

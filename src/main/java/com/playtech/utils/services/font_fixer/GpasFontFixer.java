@@ -13,12 +13,6 @@ public class GpasFontFixer extends AbstractFontFixer {
     }
 
     @Override
-    @Value("${gpas.font-fixer.file-name}")
-    public void setFontFileName(String fontFileName) {
-        this.fontFileName = fontFileName;
-    }
-
-    @Override
     @Value("${gpas.font-fixer.line-config}")
     public void setConfigLineBeginning(String configLineBeginning) {
         this.configLineBeginning = configLineBeginning;

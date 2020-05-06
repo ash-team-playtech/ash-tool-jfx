@@ -19,13 +19,10 @@ public abstract class AbstractFontFixer extends AbstractParser implements Util {
 
     private static final SimpleDateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_");
 
-    @Value("${font-fixer.file-path}")
     private String fontFilePath;
-
-    @Value("${font-fixer.file.override}")
+    private String fontFileName;
     private boolean override;
 
-    String fontFileName;
     String configLineBeginning;
     String parametersSeparator;
 
@@ -36,7 +33,29 @@ public abstract class AbstractFontFixer extends AbstractParser implements Util {
         this.fontParameters = fontParameters;
     }
 
-    public abstract void setFontFileName(String fontFileName);
+    public void setFontFilePath(String fontFilePath) {
+        this.fontFilePath = fontFilePath;
+    }
+
+    public void setFontFileName(String fontFileName) {
+        this.fontFileName = fontFileName;
+    }
+
+    public void setOverride(boolean override) {
+        this.override = override;
+    }
+
+    public void setXOffset(int delta) {
+        fontParameters.setParameterValue(AbstractFontParameters.ParameterType.X_OFFSET, delta);
+    }
+
+    public void setYOffset(int delta) {
+        fontParameters.setParameterValue(AbstractFontParameters.ParameterType.Y_OFFSET, delta);
+    }
+
+    public void setXAdvanced(int delta) {
+        fontParameters.setParameterValue(AbstractFontParameters.ParameterType.X_ADVANCE, delta);
+    }
 
     public abstract void setConfigLineBeginning(String configLineBeginning);
 

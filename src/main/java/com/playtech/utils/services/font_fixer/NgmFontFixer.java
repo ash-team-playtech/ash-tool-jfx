@@ -13,12 +13,6 @@ public class NgmFontFixer extends AbstractFontFixer {
     }
 
     @Override
-    @Value("${ngm.font-fixer.file-name}")
-    public void setFontFileName(String fontFileName) {
-        this.fontFileName = fontFileName;
-    }
-
-    @Override
     @Value("${ngm.font-fixer.line-config}")
     public void setConfigLineBeginning(String configLineBeginning) {
         this.configLineBeginning = configLineBeginning;
