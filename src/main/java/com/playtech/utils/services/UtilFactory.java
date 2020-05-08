@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 public class UtilFactory {
 
     @Autowired
-    private Renamer renamer;
-
-    @Autowired
     private LinesParser linesParser;
 
     @Autowired
@@ -21,9 +18,8 @@ public class UtilFactory {
 
     public Util getUtil(UtilType utilType) {
         switch (utilType.getUtilID()) {
-            case 0: return renamer;
-            case 1: return linesParser;
-            case 2: return fontFixerFactory;
+            case 0: return linesParser;
+            case 1: return fontFixerFactory;
             default: return duplicatesRemover;
         }
     }

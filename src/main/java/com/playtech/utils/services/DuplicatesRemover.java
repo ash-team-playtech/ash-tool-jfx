@@ -4,38 +4,24 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+/**
+ * Tool for removing duplicated chars (e.g. font char sequences)
+ */
 @Component
-public class DuplicatesRemover extends AbstractParser implements Util {
-
-    private static final String PATH = "C:\\Work\\Temp\\localization\\charset_white_bitmap_font.txt";
-
-    private Set<Character> charList = new HashSet<>();
+public class DuplicatesRemover extends AbstractUtil {
 
     @Override
-    public void execute() {
-        init();
-        parseConfigFile();
-        printResults();
-    }
-
-    @Override
-    protected void init() {
-        setPath(PATH);
-    }
-
-    @Override
-    protected void parseLine(String line) {
-        for (char c : line.toCharArray()) {
-            charList.add(c);
+    protected void performActions() {
+        Set<Character> charList = new HashSet<>();
+        for (String parsedLine : getParsedLines()) {
+            for (char c : parsedLine.toCharArray()) {
+                charList.add(c);
+            }
         }
-    }
-
-    protected void printResults() {
-        StringBuilder builder = new StringBuilder();
-        for (Character c : charList) {
-            builder.append(c);
-        }
-        System.out.println(builder.toString());
+        getResultedLines().add(charList.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining()));
     }
 }

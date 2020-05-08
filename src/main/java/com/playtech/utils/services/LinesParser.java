@@ -1,36 +1,25 @@
 package com.playtech.utils.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Tool for parsing winlines config and converting it to a usable format
+ */
 @Component
-public class LinesParser extends AbstractParser implements Util {
+public class LinesParser extends AbstractUtil {
 
-    private static final String PATH = "C:\\Work\\Temp\\LWSS\\Forest Prince Profile 1.4.xml";
-    private static final String CONFIG_PATTERN = "<Winline ";
-
-    private List<String> linesConfig = new ArrayList<>();
+    @Value("${lines-parser.pattern}")
+    private String configPattern;
 
     @Override
-    public void execute() {
-        init();
-        parseConfigFile();
-        printResults();
-    }
-
-    @Override
-    protected void init() {
-        setPath(PATH);
-    }
-
-    @Override
-    protected void parseLine(String line) {
-        if (line.contains(CONFIG_PATTERN)) {
-            String [] lineParams = line.substring(line.indexOf("<"), line.indexOf("/")).split(" ");
-            String value = lineParams[1].replace("\"", "");
-            linesConfig.add(formatLine(value.substring(value.indexOf("=") + 1)));
+    protected void performActions() {
+        for (String parsedLine : getParsedLines()) {
+            if (parsedLine.contains(configPattern)) {
+                String [] lineParams = parsedLine.substring(parsedLine.indexOf("<"), parsedLine.indexOf("/")).split(" ");
+                String value = lineParams[1].replace("\"", "");
+                getResultedLines().add(formatLine(value.substring(value.indexOf("=") + 1)));
+            }
         }
     }
 
@@ -48,11 +37,5 @@ public class LinesParser extends AbstractParser implements Util {
         }
         stringBuilder.append("]");
         return stringBuilder.toString();
-    }
-
-    protected void printResults() {
-        for (String line : linesConfig) {
-            System.out.println(line);
-        }
     }
 }

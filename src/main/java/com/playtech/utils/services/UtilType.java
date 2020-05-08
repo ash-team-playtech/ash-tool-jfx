@@ -1,10 +1,9 @@
 package com.playtech.utils.services;
 
 public enum UtilType {
-    RENAMER(0),
-    LINES_PARSER(1),
-    FONT_FIXER(2),
-    DUPLICATES_REMOVER(3);
+    LINES_PARSER(0),
+    FONT_FIXER(1),
+    DUPLICATES_REMOVER(2);
 
     private int utilID;
 
