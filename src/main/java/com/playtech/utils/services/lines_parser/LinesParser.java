@@ -1,5 +1,6 @@
-package com.playtech.utils.services;
+package com.playtech.utils.services.lines_parser;
 
+import com.playtech.utils.services.AbstractUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

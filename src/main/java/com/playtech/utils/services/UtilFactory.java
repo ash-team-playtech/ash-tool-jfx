@@ -1,6 +1,8 @@
 package com.playtech.utils.services;
 
+import com.playtech.utils.services.duplicates_remover.DuplicatesRemover;
 import com.playtech.utils.services.font_fixer.FontFixerFactory;
+import com.playtech.utils.services.lines_parser.LinesParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
