@@ -19,9 +19,9 @@ public class UtilFactory {
     private DuplicatesRemover duplicatesRemover;
 
     public Util getUtil(UtilType utilType) {
-        switch (utilType.getUtilID()) {
-            case 0: return linesParser;
-            case 1: return fontFixerFactory;
+        switch (utilType) {
+            case LINES_PARSER: return linesParser;
+            case FONT_FIXER: return fontFixerFactory;
             default: return duplicatesRemover;
         }
     }

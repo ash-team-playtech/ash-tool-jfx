@@ -1,129 +1,52 @@
 package com.playtech.utils.controllers;
 
-import com.playtech.utils.services.AbstractUtil;
-import com.playtech.utils.services.UtilFactory;
 import com.playtech.utils.services.UtilType;
-import com.playtech.utils.services.font_fixer.AbstractFontParameters;
-import com.playtech.utils.services.font_fixer.FontFixerFactory;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import javax.annotation.PostConstruct;
-import java.io.File;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class MainController {
+@Controller
+public class MainController implements Initializable {
 
     @Autowired
-    private UtilFactory utilFactory;
-
-    @FXML private ChoiceBox utilsChoiceBox;
-    @FXML private Pane utilsContainer;
-    @FXML public Button startBtn;
-
-    @FXML public Label fileNameLabel;
-    @FXML public VBox commonElements;
-    @FXML public Label dragBox;
-    @FXML public CheckBox overrideCheckBox;
-
-    @FXML public TextField xOffsetField;
-    @FXML public TextField yOffsetField;
-    @FXML public TextField xAdvancedField;
+    private ControllerFactory controllerFactory;
 
     private Map<UtilType, Pane> utilContainers = new HashMap<>();
 
-    private Map<AbstractFontParameters.ParameterType, Boolean> fontFixerCorrectInputs = new HashMap<AbstractFontParameters.ParameterType, Boolean>() {{
-        for (AbstractFontParameters.ParameterType parameterType : AbstractFontParameters.ParameterType.values()) {
-            put(parameterType, true);
-        }
-    }};
+    @FXML private ChoiceBox<UtilType> utilsChoiceBox;
+    @FXML private Pane utilsContainer;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         for (Node child : utilsContainer.getChildren()) {
             String id = child.getId();
-            if (id.matches("\\d+")) {
-                utilContainers.put(UtilType.getTypeById(Integer.parseInt(id)), (Pane) child);
-            }
+            Arrays.stream(UtilType.values()).filter(utilType -> utilType.getUtilId().equals(id))
+                    .findFirst().ifPresent(util -> utilContainers.put(util, (Pane) child));
         }
-    }
-
-    @PostConstruct
-    public void init() {
         utilsChoiceBox.getItems().addAll(FXCollections.observableArrayList(UtilType.values()));
-        utilsChoiceBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            hideAllUtilContainers();
-            utilContainers.get(UtilType.getTypeById((Integer) newValue)).setVisible(true);
-            commonElements.setVisible(true);
+        utilsChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            updateUtilContainersVisibility(newValue);
+            resetAllUtilContainers();
         });
-        overrideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> AbstractUtil.setOverride(observable.getValue()));
-        xOffsetField.textProperty().addListener((observable, oldValue, newValue) -> ((FontFixerFactory) utilFactory.getUtil(UtilType.FONT_FIXER)).getFontFixer().setXOffset(validateDeltaInput(AbstractFontParameters.ParameterType.X_OFFSET, xOffsetField, newValue)));
-        yOffsetField.textProperty().addListener((observable, oldValue, newValue) -> ((FontFixerFactory) utilFactory.getUtil(UtilType.FONT_FIXER)).getFontFixer().setYOffset(validateDeltaInput(AbstractFontParameters.ParameterType.Y_OFFSET, yOffsetField, newValue)));
-        xAdvancedField.textProperty().addListener((observable, oldValue, newValue) -> ((FontFixerFactory) utilFactory.getUtil(UtilType.FONT_FIXER)).getFontFixer().setXAdvanced(validateDeltaInput(AbstractFontParameters.ParameterType.X_ADVANCE, xAdvancedField, newValue)));
     }
 
-    private void hideAllUtilContainers() {
-        for (Pane container : utilContainers.values()) {
-            container.setVisible(false);
-        }
+    private void updateUtilContainersVisibility(UtilType selectedUtil) {
+        utilContainers.values().forEach(container -> container.setVisible(false));
+        utilContainers.get(selectedUtil).setVisible(true);
     }
 
-    public void processDraggedFile(DragEvent dragEvent) {
-        File file = new LinkedList<>(dragEvent.getDragboard().getFiles()).getFirst();
-        AbstractUtil.setFilePath(file.getParent() + "\\");
-        AbstractUtil.setFileName(file.getName());
-        fileNameLabel.setText(file.getName());
-        fileNameLabel.setTextFill(Color.GREEN);
-        dragBox.setDisable(true);
-        utilContainers.get(utilsChoiceBox.getValue()).setDisable(false);
-    }
-
-    public void onDragOver(DragEvent dragEvent) {
-        // allow for both copying and moving, whatever user chooses
-        if (dragEvent.getGestureSource() != this && dragEvent.getDragboard().hasFiles()) {
-            dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-        }
-        dragEvent.consume();
-    }
-
-    public void start(ActionEvent actionEvent) {
-        utilFactory.getUtil(((UtilType) utilsChoiceBox.getValue())).run();
-    }
-
-    private int validateDeltaInput(AbstractFontParameters.ParameterType parameterType, TextField textField, String inputValue) {
-        int newValue = 0;
-        try {
-            if (inputValue.length() > 0) {
-                newValue = Integer.parseInt(inputValue);
-            }
-            fontFixerCorrectInputs.put(parameterType, true);
-            textField.setStyle("-fx-border-color: none;");
-        } catch (NumberFormatException e) {
-            fontFixerCorrectInputs.put(parameterType, false);
-            textField.setStyle("-fx-border-color: red;");
-        }
-        updateStartButtonState();
-        return newValue;
-    }
-
-    private void updateStartButtonState() {
-        boolean isAnyDeltaSpecified = xOffsetField.getText().length() > 0 || yOffsetField.getText().length() > 0 || xAdvancedField.getText().length() > 0;
-        boolean isAllInputsCorrect = !fontFixerCorrectInputs.values().contains(false);
-        startBtn.setDisable(!(isAnyDeltaSpecified && isAllInputsCorrect));
+    private void resetAllUtilContainers() {
+        controllerFactory.getAllControllers().forEach(IController::reset);
     }
 }

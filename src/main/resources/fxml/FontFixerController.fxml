@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="fontFixer" prefHeight="260.0" prefWidth="500.0" visible="false" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.FontFixerController">
+    <VBox fx:id="propertiesContainer" alignment="CENTER" disable="true" prefHeight="80.0" prefWidth="500.0" spacing="5.0">
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0" spacing="10.0">
+            <Label text="XOffset" />
+            <TextField prefHeight="25.0" prefWidth="65.0" fx:id="xOffsetField" />
+            <Label text="YOffset" />
+            <TextField fx:id="yOffsetField" prefHeight="25.0" prefWidth="65.0" />
+            <Label text="XAdvanced" />
+            <TextField prefHeight="25.0" prefWidth="65.0" fx:id="xAdvancedField" />
+        </HBox>
+    </VBox>
+    <VBox alignment="CENTER" layoutY="80.0" prefHeight="150.0" prefWidth="500.0" spacing="5.0">
+        <HBox alignment="CENTER" prefHeight="10.0" prefWidth="500.0" spacing="10.0">
+            <Label alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="250.0" text="Source file:" />
+            <Label fx:id="fileNameLabel" prefHeight="100.0" prefWidth="250.0" text="empty" textFill="RED" />
+        </HBox>
+        <Label fx:id="dragBox" alignment="CENTER" layoutY="130.0" onDragDropped="#processDraggedFile" onDragOver="#onDragOver" prefHeight="85.0" prefWidth="500.0" style="-fx-background-color: #cccccc;" text="Please drag-n-drop source file" textFill="#00000080">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+        <CheckBox fx:id="overrideCheckBox" disable="true" text="Override existing file" />
+    </VBox>
+    <Button fx:id="startBtn" alignment="CENTER" disable="true" layoutX="230.0" layoutY="230.0" onAction="#start" text="Start" textAlignment="CENTER" />
+</Pane>

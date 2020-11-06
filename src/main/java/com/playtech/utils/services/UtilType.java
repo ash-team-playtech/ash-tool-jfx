@@ -1,26 +1,28 @@
 package com.playtech.utils.services;
 
 public enum UtilType {
-    LINES_PARSER(0),
-    FONT_FIXER(1),
-    DUPLICATES_REMOVER(2);
+    LINES_PARSER("linesParser", "Lines Parser"),
+    FONT_FIXER("fontFixer", "Font Fixer"),
+    DUPLICATES_REMOVER("duplicatesRemover", "Duplicates Remover");
 
-    private int utilID;
+    private String utilId;
+    private String utilName;
 
-    UtilType(int utilID) {
-        this.utilID = utilID;
+    UtilType(String utilId, String utilName) {
+        this.utilId = utilId;
+        this.utilName = utilName;
     }
 
-    public int getUtilID() {
-        return utilID;
+    public String getUtilId() {
+        return utilId;
     }
 
-    public static UtilType getTypeById(int id) {
-        for (UtilType utilType : values()) {
-            if (utilType.getUtilID() == id) {
-                return utilType;
-            }
-        }
-        return null;
+    public String getUtilName() {
+        return utilName;
+    }
+
+    @Override
+    public String toString() {
+        return utilName;
     }
 }

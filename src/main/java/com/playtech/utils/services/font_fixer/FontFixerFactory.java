@@ -5,6 +5,9 @@ import com.playtech.utils.services.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 @Component
 public class FontFixerFactory implements Util {
 
@@ -19,8 +22,22 @@ public class FontFixerFactory implements Util {
     private GpasFontFixer gpasFontFixer;
 
     public AbstractFontFixer getFontFixer() {
-        FileType fileType = FileType.valueOf(AbstractUtil.getFileName().substring(AbstractUtil.getFileName().indexOf(".") + 1).toUpperCase());
+        FileType fileType = FileType.valueOf(getFileExtension(AbstractUtil.getFileName()));
         return fileType.equals(FileType.FNT) ? ngmFontFixer : gpasFontFixer;
+    }
+
+    private String getFileExtension(String fileName) {
+        return fileName.substring(fileName.indexOf(".") + 1).toUpperCase();
+    }
+
+    public boolean isValidFile(String fileName) {
+        return Arrays.stream(FileType.values()).anyMatch(fileType -> fileType.name().equals(getFileExtension(fileName)));
+    }
+
+    public String getSupportedFileTypes() {
+        return Arrays.stream(FileType.values())
+                .map(FileType::name)
+                .collect(Collectors.joining(","));
     }
 
     @Override

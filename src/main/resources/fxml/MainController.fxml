@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.MainController">
+    <VBox alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0"
+          AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
+          AnchorPane.topAnchor="20.0">
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <Label text="Useful Utils">
+            <font>
+                <Font name="System Bold" size="24.0"/>
+            </font>
+        </Label>
+        <HBox alignment="CENTER" prefHeight="164.0" prefWidth="500.0" spacing="20.0">
+            <Label text="Select util:">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+            <ChoiceBox fx:id="utilsChoiceBox" prefWidth="150.0"/>
+        </HBox>
+        <Pane fx:id="utilsContainer" prefHeight="460.0" prefWidth="500.0" VBox.vgrow="NEVER">
+            <fx:include fx:id="fontFixer" source="FontFixerController.fxml" visible="false"/>
+        </Pane>
+    </VBox>
+</AnchorPane>
