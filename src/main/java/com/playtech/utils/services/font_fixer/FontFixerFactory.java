@@ -34,10 +34,10 @@ public class FontFixerFactory implements Util {
         return Arrays.stream(FileType.values()).anyMatch(fileType -> fileType.name().equals(getFileExtension(fileName)));
     }
 
-    public String getSupportedFileTypes() {
+    public static String getSupportedFileTypes() {
         return Arrays.stream(FileType.values())
                 .map(FileType::name)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
     }
 
     @Override

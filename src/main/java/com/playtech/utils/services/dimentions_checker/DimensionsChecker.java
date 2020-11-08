@@ -13,8 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
-import static com.sun.activation.registries.LogSupport.log;
-
 @Component
 public class DimensionsChecker {
 
@@ -56,12 +54,12 @@ public class DimensionsChecker {
                 int height = reader.getHeight(reader.getMinIndex());
                 result = new Dimension(width, height);
             } catch (IOException e) {
-                log(e.getMessage());
+//                log(e.getMessage());
             } finally {
                 reader.dispose();
             }
         } else {
-            log("No reader found for given format: " + suffix);
+//            log("No reader found for given format: " + suffix);
         }
         return result;
     }

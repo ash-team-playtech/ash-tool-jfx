@@ -1,0 +1,23 @@
+#status-bar-info {
+    -fx-text-fill: linear-gradient(from 0% 100% to 100% 0%, #0e00ff 0%, #00ceff 50%, #0e00ff 100%);
+}
+
+#status-bar-successful {
+    -fx-text-fill: linear-gradient(from 0% 100% to 100% 0%, #045300 0%, #b3ff00 50%, #045300 100%);
+}
+
+#status-bar-error {
+    -fx-text-fill: linear-gradient(from 0% 100% to 100% 0%, #ff0000 0%, #ffb952 50%, #ff0000 100%);
+}
+
+#dragBox {
+    -fx-text-fill: linear-gradient(from 0% 100% to 100% 0%, #0e00ff 0%, #00ceff 50%, #0e00ff 100%);
+    -fx-background-color: linear-gradient(from 0% 100% to 100% 0%, #0e00ff 0%, #00ceff 50%, #0e00ff 100%), #cccccc;
+    -fx-background-insets: 0, 2;
+}
+
+#dragBox:disabled {
+    -fx-text-fill: linear-gradient(from 0% 100% to 100% 0%, #000000 0%, #5e5e5e 50%, #000000 100%);
+    -fx-background-color: linear-gradient(from 0% 100% to 100% 0%, #000000 0%, #5e5e5e 50%, #000000 100%), #cccccc;
+    -fx-background-insets: 0, 2;
+}

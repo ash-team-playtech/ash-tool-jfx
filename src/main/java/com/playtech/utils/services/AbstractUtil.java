@@ -69,7 +69,7 @@ public abstract class AbstractUtil implements Util {
     }
 
     protected void parseConfigFile() {
-        try (Stream<String> lines = Files.lines(Paths.get(filePath), Charset.defaultCharset())) {
+        try (Stream<String> lines = Files.lines(Paths.get(filePath + fileName), Charset.defaultCharset())) {
             parsedLines.addAll(lines.collect(Collectors.toList()));
         } catch (IOException e) {
             e.printStackTrace();
