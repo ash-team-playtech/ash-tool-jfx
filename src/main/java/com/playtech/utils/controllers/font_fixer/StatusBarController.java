@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 public class StatusBarController {
 
     public enum Status {
-        WAITING_FOR_FONT("Please, drag-n-drop font file", Style.INFO),
-        WAITING_FOR_CONFIGURATION("Please, specify desired configuration changes", Style.INFO),
+        WAITING_FOR_FONT("Waiting for the font file", Style.INFO),
+        WAITING_FOR_CONFIGURATION("Waiting for desired configuration change to be entered", Style.INFO),
         PROCESSING("Processing...", Style.INFO),
         DONE("Configuration change is successfully finished", Style.SUCCESSFUL),
         INCORRECT_FILE("Incorrect file type. Supported extensions: " + FontFixerFactory.getSupportedFileTypes(), Style.ERROR);
@@ -49,6 +49,7 @@ public class StatusBarController {
     }
 
     private final Label statusBar;
+    private Status currentStatus;
 
     @Autowired
     public StatusBarController(Label statusBar) {
@@ -60,7 +61,12 @@ public class StatusBarController {
         setStatus(Status.WAITING_FOR_FONT);
     }
 
+    public Status getStatus() {
+        return currentStatus;
+    }
+
     public void setStatus(Status status) {
+        currentStatus = status;
         statusBar.setText(status.getMessage());
         statusBar.setId(status.getTextStyle().getStyleId());
     }

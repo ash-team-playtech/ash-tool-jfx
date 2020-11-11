@@ -44,4 +44,9 @@ public class FontFixerFactory implements Util {
     public void run() {
         getFontFixer().run();
     }
+
+    @Override
+    public void reset() {
+        getFontFixer().reset();
+    }
 }

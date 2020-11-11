@@ -4,6 +4,7 @@ import com.playtech.utils.controllers.IController;
 import com.playtech.utils.services.AbstractUtil;
 import com.playtech.utils.services.font_fixer.AbstractFontParameters;
 import com.playtech.utils.services.font_fixer.FontFixerFactory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,10 +66,10 @@ public class FontFixerController implements IController, Initializable {
                 newValue = Integer.parseInt(inputValue);
             }
             fontFixerCorrectInputs.put(parameterType, true);
-            textField.setStyle("-fx-border-color: none;");
+            textField.setId("text-field-base");
         } catch (NumberFormatException e) {
             fontFixerCorrectInputs.put(parameterType, false);
-            textField.setStyle("-fx-border-color: red;");
+            textField.setId("text-field-incorrect");
         }
         updateStartButtonState();
         return newValue;
@@ -87,6 +88,16 @@ public class FontFixerController implements IController, Initializable {
         fontFixerFactory.run();
         statusBarController.setStatus(StatusBarController.Status.DONE);
         reset();
+        Platform.runLater(() -> {
+            try {
+                Thread.sleep(5000);
+                if (statusBarController.getStatus().equals(StatusBarController.Status.DONE)) {
+                    statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_FONT);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -95,11 +106,13 @@ public class FontFixerController implements IController, Initializable {
         yOffsetField.clear();
         xAdvancedField.clear();
         fileNameLabel.setText("empty");
+        fileNameLabel.setTextFill(Color.RED);
         dragBox.setDisable(false);
         startBtn.setDisable(true);
         propertiesContainer.setDisable(true);
         overrideCheckBox.setDisable(true);
         overrideCheckBox.selectedProperty().setValue(false);
+        fontFixerFactory.reset();
     }
 
     @FXML

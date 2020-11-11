@@ -21,3 +21,11 @@
     -fx-background-color: linear-gradient(from 0% 100% to 100% 0%, #000000 0%, #5e5e5e 50%, #000000 100%), #cccccc;
     -fx-background-insets: 0, 2;
 }
+
+#text-field-base {
+    -fx-border-color: none;
+}
+
+#text-field-incorrect {
+    -fx-border-color: red;
+}

@@ -85,5 +85,12 @@ public abstract class AbstractUtil implements Util {
         }
     }
 
+    @Override
+    public void reset() {
+        filePath = null;
+        fileName = null;
+        override = false;
+    }
+
     protected abstract void performActions();
 }
