@@ -8,10 +8,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
@@ -54,9 +51,6 @@ public class FontFixerController implements IController, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         overrideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> AbstractUtil.setOverride(observable.getValue()));
-        xOffsetField.textProperty().addListener((observable, oldValue, newValue) -> fontFixerFactory.getFontFixer().setXOffset(validateDeltaInput(AbstractFontParameters.ParameterType.X_OFFSET, xOffsetField, newValue)));
-        yOffsetField.textProperty().addListener((observable, oldValue, newValue) -> fontFixerFactory.getFontFixer().setYOffset(validateDeltaInput(AbstractFontParameters.ParameterType.Y_OFFSET, yOffsetField, newValue)));
-        xAdvancedField.textProperty().addListener((observable, oldValue, newValue) -> fontFixerFactory.getFontFixer().setXAdvanced(validateDeltaInput(AbstractFontParameters.ParameterType.X_ADVANCE, xAdvancedField, newValue)));
     }
 
     private int validateDeltaInput(AbstractFontParameters.ParameterType parameterType, TextField textField, String inputValue) {
@@ -124,6 +118,7 @@ public class FontFixerController implements IController, Initializable {
             fileNameLabel.setText(file.getName());
             fileNameLabel.setTextFill(Color.GREEN);
             dragBox.setDisable(true);
+            addPropertiesListeners();
             propertiesContainer.setDisable(false);
             overrideCheckBox.setDisable(false);
             statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_CONFIGURATION);
@@ -131,6 +126,12 @@ public class FontFixerController implements IController, Initializable {
             statusBarController.setStatus(StatusBarController.Status.INCORRECT_FILE);
             reset();
         }
+    }
+
+    private void addPropertiesListeners() {
+        xOffsetField.textProperty().addListener((observable, oldValue, newValue) -> fontFixerFactory.getFontFixer().setXOffset(validateDeltaInput(AbstractFontParameters.ParameterType.X_OFFSET, xOffsetField, newValue)));
+        yOffsetField.textProperty().addListener((observable, oldValue, newValue) -> fontFixerFactory.getFontFixer().setYOffset(validateDeltaInput(AbstractFontParameters.ParameterType.Y_OFFSET, yOffsetField, newValue)));
+        xAdvancedField.textProperty().addListener((observable, oldValue, newValue) -> fontFixerFactory.getFontFixer().setXAdvanced(validateDeltaInput(AbstractFontParameters.ParameterType.X_ADVANCE, xAdvancedField, newValue)));
     }
 
     @FXML

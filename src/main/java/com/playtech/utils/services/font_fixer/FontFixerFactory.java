@@ -47,6 +47,7 @@ public class FontFixerFactory implements Util {
 
     @Override
     public void reset() {
-        getFontFixer().reset();
+        ngmFontFixer.reset();
+        gpasFontFixer.reset();
     }
 }

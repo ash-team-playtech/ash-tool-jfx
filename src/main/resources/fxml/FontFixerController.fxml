@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="fontFixer" prefHeight="260.0" prefWidth="500.0" stylesheets="@../css/fontFixer.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.font_fixer.FontFixerController">
-    <VBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" spacing="5.0">
-        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="500.0" spacing="10.0">
+<Pane fx:id="fontFixer" stylesheets="@../css/fontFixer.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.font_fixer.FontFixerController">
+    <VBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0" spacing="5.0">
+        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" spacing="10.0">
             <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="40.0" text="Status:">
                 <font>
                     <Font name="System Bold" size="12.0" />
@@ -14,12 +14,12 @@
             </Label>
             <Label fx:id="statusBar" prefHeight="33.0" prefWidth="450.0" />
         </HBox>
-        <Label prefHeight="17.0" prefWidth="512.0" text="Configurable parameters:">
+        <Label prefHeight="17.0" prefWidth="500.0" text="Configurable parameters:">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <HBox fx:id="propertiesContainer" alignment="CENTER" disable="true" prefHeight="60.0" prefWidth="500.0" spacing="10.0">
+        <HBox fx:id="propertiesContainer" alignment="CENTER" disable="true" prefHeight="40.0" prefWidth="500.0" spacing="10.0">
             <Label text="XOffset" />
             <TextField prefHeight="25.0" prefWidth="65.0" fx:id="xOffsetField" />
             <Label text="YOffset" />
@@ -28,7 +28,7 @@
             <TextField prefHeight="25.0" prefWidth="65.0" fx:id="xAdvancedField" />
         </HBox>
     </VBox>
-    <VBox alignment="CENTER" layoutY="80.0" prefHeight="150.0" prefWidth="500.0" spacing="5.0">
+    <VBox alignment="CENTER" layoutY="100.0" prefHeight="150.0" prefWidth="500.0" spacing="5.0">
         <HBox alignment="CENTER" prefHeight="10.0" prefWidth="500.0" spacing="10.0">
             <Label prefHeight="17.0" prefWidth="70.0" text="Source file:">
                 <font>
@@ -44,5 +44,5 @@
         </Label>
         <CheckBox fx:id="overrideCheckBox" disable="true" text="Override existing file" />
     </VBox>
-    <Button fx:id="startBtn" alignment="CENTER" disable="true" layoutX="230.0" layoutY="230.0" onAction="#start" text="Start" textAlignment="CENTER" />
+    <Button fx:id="startBtn" alignment="CENTER" disable="true" layoutX="230.0" layoutY="260.0" onAction="#start" text="Start" textAlignment="CENTER" />
 </Pane>
