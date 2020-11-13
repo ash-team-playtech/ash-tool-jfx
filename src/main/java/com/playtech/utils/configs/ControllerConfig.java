@@ -13,7 +13,7 @@ import java.io.IOException;
 @Configuration
 public class ControllerConfig {
 
-    @Value("classpath:fxml/MainController.fxml")
+    @Value("${application.url}")
     private Resource resource;
 
     @Bean
