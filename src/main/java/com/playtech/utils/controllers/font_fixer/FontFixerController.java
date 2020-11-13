@@ -1,6 +1,7 @@
 package com.playtech.utils.controllers.font_fixer;
 
 import com.playtech.utils.controllers.IController;
+import com.playtech.utils.controllers.status.StatusBarController;
 import com.playtech.utils.services.AbstractUtil;
 import com.playtech.utils.services.font_fixer.AbstractFontParameters;
 import com.playtech.utils.services.font_fixer.FontFixerFactory;
@@ -8,24 +9,30 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 @Controller
 public class FontFixerController implements IController, Initializable {
 
-    @FXML private Label statusBar;
+    @FXML private Pane fontFixer;
     @FXML private Label fileNameLabel;
     @FXML private Label dragBox;
     @FXML private HBox propertiesContainer;
@@ -42,7 +49,7 @@ public class FontFixerController implements IController, Initializable {
     @Lazy
     private StatusBarController statusBarController;
 
-    private final Map<AbstractFontParameters.ParameterType, Boolean> fontFixerCorrectInputs = new HashMap<AbstractFontParameters.ParameterType, Boolean>() {{
+    private final Map<AbstractFontParameters.ParameterType, Boolean> fontFixerCorrectInputs = new HashMap<>() {{
         for (AbstractFontParameters.ParameterType parameterType : AbstractFontParameters.ParameterType.values()) {
             put(parameterType, true);
         }
@@ -51,6 +58,11 @@ public class FontFixerController implements IController, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         overrideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> AbstractUtil.setOverride(observable.getValue()));
+        fontFixer.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_FONT);
+            }
+        });
     }
 
     private int validateDeltaInput(AbstractFontParameters.ParameterType parameterType, TextField textField, String inputValue) {
@@ -80,12 +92,12 @@ public class FontFixerController implements IController, Initializable {
         startBtn.setDisable(true);
         statusBarController.setStatus(StatusBarController.Status.PROCESSING);
         fontFixerFactory.run();
-        statusBarController.setStatus(StatusBarController.Status.DONE);
+        statusBarController.setStatus(StatusBarController.Status.CONFIG_CHANGE_FINISHED);
         reset();
         Platform.runLater(() -> {
             try {
                 Thread.sleep(5000);
-                if (statusBarController.getStatus().equals(StatusBarController.Status.DONE)) {
+                if (statusBarController.getStatus().equals(StatusBarController.Status.CONFIG_CHANGE_FINISHED)) {
                     statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_FONT);
                 }
             } catch (InterruptedException e) {
@@ -141,10 +153,5 @@ public class FontFixerController implements IController, Initializable {
             dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         dragEvent.consume();
-    }
-
-    @Bean
-    public Label getStatusBar() {
-        return statusBar;
     }
 }

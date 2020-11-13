@@ -16,10 +16,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+//TODO: Add logger to catch all exceptions/warnings
 @Component
 public class DimensionsChecker implements Util {
 
     private String projectPath;
+    private Thread executionThread;
 
     private final Dimension mobileDimensionLimit = new Dimension(1024, 1024);
     private final Dimension desktopDimensionLimit = new Dimension(2048, 2048);
@@ -42,7 +44,7 @@ public class DimensionsChecker implements Util {
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return (List<T>) problematicFiles;
     }
@@ -60,12 +62,12 @@ public class DimensionsChecker implements Util {
                 int height = reader.getHeight(reader.getMinIndex());
                 result = new Dimension(width, height);
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             } finally {
                 reader.dispose();
             }
         } else {
-            System.out.println("No reader found for given format: " + suffix);
+//            System.out.println("No reader found for given format: " + suffix);
         }
         return result;
     }

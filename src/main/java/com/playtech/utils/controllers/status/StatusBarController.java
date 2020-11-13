@@ -1,19 +1,25 @@
-package com.playtech.utils.controllers.font_fixer;
+package com.playtech.utils.controllers.status;
 
 import com.playtech.utils.services.font_fixer.FontFixerFactory;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("singleton")
 public class StatusBarController {
 
     public enum Status {
-        WAITING_FOR_FONT("Waiting for the font file", Style.INFO),
-        WAITING_FOR_CONFIGURATION("Waiting for desired configuration change to be entered", Style.INFO),
-        PROCESSING("Processing...", Style.INFO),
-        DONE("Configuration change is successfully finished", Style.SUCCESSFUL),
-        INCORRECT_FILE("Incorrect file type. Supported extensions: " + FontFixerFactory.getSupportedFileTypes(), Style.ERROR);
+        WAITING_FOR_FONT("Waiting for the font file", StatusBarController.Style.INFO),
+        WAITING_FOR_CONFIGURATION("Waiting for desired configuration change to be entered", StatusBarController.Style.INFO),
+        WAITING_FOR_PROJECT_DIRECTORY("Waiting for project directory to be checked", StatusBarController.Style.INFO),
+        PROCESSING("Processing...", StatusBarController.Style.INFO),
+        CONFIG_CHANGE_FINISHED("Configuration change is successfully finished", StatusBarController.Style.SUCCESSFUL),
+        ALL_IMG_CORRECT("All images under specified directory are correct", StatusBarController.Style.SUCCESSFUL),
+        INCORRECT_FILE("Incorrect file type. Supported extensions: " + FontFixerFactory.getSupportedFileTypes(), StatusBarController.Style.ERROR),
+        PROBLEMATIC_FILES_FOUND("There are some problematic files. See results field", StatusBarController.Style.ERROR),
+        EMPTY("", StatusBarController.Style.INFO);
 
         private final String message;
         private final Style textStyle;
@@ -54,11 +60,6 @@ public class StatusBarController {
     @Autowired
     public StatusBarController(Label statusBar) {
         this.statusBar = statusBar;
-        init();
-    }
-
-    private void init() {
-        setStatus(Status.WAITING_FOR_FONT);
     }
 
     public Status getStatus() {
@@ -69,5 +70,9 @@ public class StatusBarController {
         currentStatus = status;
         statusBar.setText(status.getMessage());
         statusBar.setId(status.getTextStyle().getStyleId());
+    }
+
+    public void reset() {
+        setStatus(Status.EMPTY);
     }
 }
