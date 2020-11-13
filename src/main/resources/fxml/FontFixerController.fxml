@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="fontFixer" stylesheets="@../css/fontFixer.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.font_fixer.FontFixerController">
+<Pane fx:id="fontFixer" prefHeight="300.0" prefWidth="500.0" stylesheets="@../css/fontFixer.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.font_fixer.FontFixerController">
     <VBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0" spacing="5.0">
         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" spacing="10.0">
             <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="40.0" text="Status:">

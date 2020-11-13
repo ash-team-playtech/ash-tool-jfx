@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -62,10 +63,11 @@ public abstract class AbstractUtil implements Util {
         this.resultedLines = resultedLines;
     }
 
-    public void run() {
+    public <T> List<T> run() {
         parseConfigFile();
         performActions();
         saveResults();
+        return Collections.emptyList();
     }
 
     protected void parseConfigFile() {

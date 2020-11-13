@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="dimensionsChecker" prefHeight="300.0" prefWidth="500.0" stylesheets="@../css/fontFixer.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.playtech.utils.controllers.dimensions_checker.DimensionsCheckerController">
+    <VBox prefHeight="260.0" prefWidth="500.0" spacing="5.0">
+        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="500.0" spacing="10.0">
+            <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="40.0" text="Status:">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Label>
+            <Label fx:id="statusBar" prefHeight="33.0" prefWidth="450.0" />
+        </HBox>
+        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="500.0" spacing="10.0">
+            <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="115.0" text="Project directory:">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Label>
+            <TextField fx:id="projectDirectory" prefHeight="30.0" prefWidth="335.0" />
+            <Button fx:id="chooseDirectoryBtn" mnemonicParsing="false" onAction="#chooseDirectory" prefHeight="30.0" prefWidth="30.0" text="..." />
+        </HBox>
+        <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="45.0" text="Result:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <TextArea fx:id="resultsField" editable="false" prefHeight="150.0" prefWidth="500.0" />
+    </VBox>
+    <Button fx:id="startBtn" alignment="CENTER" disable="true" layoutX="230.0" layoutY="274.0" onAction="#start" text="Start" textAlignment="CENTER" />
+</Pane>

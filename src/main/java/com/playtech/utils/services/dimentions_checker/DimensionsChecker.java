@@ -1,5 +1,6 @@
 package com.playtech.utils.services.dimentions_checker;
 
+import com.playtech.utils.services.Util;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -11,34 +12,39 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @Component
-public class DimensionsChecker {
+public class DimensionsChecker implements Util {
 
-    private final String rootPath = "c:\\WORK\\SVN\\ASH\\";
+    private String projectPath;
+
     private final Dimension mobileDimensionLimit = new Dimension(1024, 1024);
     private final Dimension desktopDimensionLimit = new Dimension(2048, 2048);
 
-    public static void main(String[] args) {
-        DimensionsChecker dimensionsChecker = new DimensionsChecker();
-        dimensionsChecker.processImages();
+    public void setProjectPath(String projectPath) {
+        this.projectPath = projectPath;
     }
 
-    private void processImages() {
+    @Override
+    public <T> List<T> run() {
+        List<String> problematicFiles = new ArrayList<>();
         try {
-            Files.walk(Paths.get(rootPath)).forEach(path -> {
+            Files.walk(Paths.get(projectPath)).forEach(path -> {
                 if (!path.toString().contains("target")) {
                     Dimension imageDim = getImageDim(path.toString());
                     Dimension maxAllowedDimension = path.toString().contains("mobile") || path.toString().contains("common") ? mobileDimensionLimit : desktopDimensionLimit;
                     if (imageDim != null && imageDim.width > maxAllowedDimension.width && imageDim.height > maxAllowedDimension.height) {
-                        System.out.println(path.toString().replace(rootPath, ""));
+                        problematicFiles.add(path.toString().replace(projectPath, ""));
                     }
                 }
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return (List<T>) problematicFiles;
     }
 
     private Dimension getImageDim(final String path) {
@@ -54,12 +60,12 @@ public class DimensionsChecker {
                 int height = reader.getHeight(reader.getMinIndex());
                 result = new Dimension(width, height);
             } catch (IOException e) {
-//                log(e.getMessage());
+                e.printStackTrace();
             } finally {
                 reader.dispose();
             }
         } else {
-//            log("No reader found for given format: " + suffix);
+            System.out.println("No reader found for given format: " + suffix);
         }
         return result;
     }
@@ -76,5 +82,10 @@ public class DimensionsChecker {
             }
         }
         return result;
+    }
+
+    @Override
+    public void reset() {
+        projectPath = null;
     }
 }

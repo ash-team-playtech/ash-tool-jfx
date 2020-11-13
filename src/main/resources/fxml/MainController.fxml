@@ -21,6 +21,7 @@
         <Pane fx:id="utilsContainer" VBox.vgrow="ALWAYS">
             <fx:include fx:id="linesParser" source="LinesParserController.fxml" visible="false" />
             <fx:include fx:id="fontFixer" source="FontFixerController.fxml" visible="false" />
+            <fx:include fx:id="dimensionsChecker" source="DimensionsCheckerController.fxml" visible="false" />
             <fx:include fx:id="duplicatesRemover" source="DuplicatesRemoverController.fxml" visible="false" />
         </Pane>
     </VBox>

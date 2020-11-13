@@ -1,8 +1,10 @@
 package com.playtech.utils.services;
 
+import java.util.List;
+
 public interface Util {
 
-    void run();
+    <T> List<T> run();
 
     void reset();
 }
