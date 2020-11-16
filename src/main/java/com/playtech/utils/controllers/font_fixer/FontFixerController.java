@@ -2,7 +2,7 @@ package com.playtech.utils.controllers.font_fixer;
 
 import com.playtech.utils.controllers.IController;
 import com.playtech.utils.controllers.status.StatusBarController;
-import com.playtech.utils.services.AbstractUtil;
+import com.playtech.utils.services.AbstractParsingUtil;
 import com.playtech.utils.services.font_fixer.AbstractFontParameters;
 import com.playtech.utils.services.font_fixer.FontFixerFactory;
 import javafx.application.Platform;
@@ -57,7 +57,7 @@ public class FontFixerController implements IController, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        overrideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> AbstractUtil.setOverride(observable.getValue()));
+        overrideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> AbstractParsingUtil.setOverride(observable.getValue()));
         fontFixer.visibleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_FONT);
@@ -125,8 +125,8 @@ public class FontFixerController implements IController, Initializable {
     private void processDraggedFile(DragEvent dragEvent) {
         File file = new LinkedList<>(dragEvent.getDragboard().getFiles()).getFirst();
         if (fontFixerFactory.isValidFile(file.getName())) {
-            AbstractUtil.setFilePath(file.getParent() + "\\");
-            AbstractUtil.setFileName(file.getName());
+            AbstractParsingUtil.setFilePath(file.getParent() + "\\");
+            AbstractParsingUtil.setFileName(file.getName());
             fileNameLabel.setText(file.getName());
             fileNameLabel.setTextFill(Color.GREEN);
             dragBox.setDisable(true);

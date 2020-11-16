@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class AbstractUtil implements Util {
+public abstract class AbstractParsingUtil implements Util {
 
     private static final SimpleDateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_");
 
@@ -28,7 +28,7 @@ public abstract class AbstractUtil implements Util {
     }
 
     public static void setFilePath(String filePath) {
-        AbstractUtil.filePath = filePath;
+        AbstractParsingUtil.filePath = filePath;
     }
 
     public static String getFileName() {
@@ -36,7 +36,7 @@ public abstract class AbstractUtil implements Util {
     }
 
     public static void setFileName(String fileName) {
-        AbstractUtil.fileName = fileName;
+        AbstractParsingUtil.fileName = fileName;
     }
 
     public static boolean isOverride() {
@@ -44,7 +44,7 @@ public abstract class AbstractUtil implements Util {
     }
 
     public static void setOverride(boolean override) {
-        AbstractUtil.override = override;
+        AbstractParsingUtil.override = override;
     }
 
     public List<String> getParsedLines() {

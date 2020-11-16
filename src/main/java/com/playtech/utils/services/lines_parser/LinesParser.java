@@ -1,6 +1,6 @@
 package com.playtech.utils.services.lines_parser;
 
-import com.playtech.utils.services.AbstractUtil;
+import com.playtech.utils.services.AbstractParsingUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Tool for parsing winlines config and converting it to a usable format
  */
 @Component
-public class LinesParser extends AbstractUtil {
+public class LinesParser extends AbstractParsingUtil {
 
     @Value("${lines-parser.pattern}")
     private String configPattern;

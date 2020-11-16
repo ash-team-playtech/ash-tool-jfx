@@ -1,6 +1,6 @@
 package com.playtech.utils.services.duplicates_remover;
 
-import com.playtech.utils.services.AbstractUtil;
+import com.playtech.utils.services.AbstractParsingUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Tool for removing duplicated chars (e.g. font char sequences)
  */
 @Component
-public class DuplicatesRemover extends AbstractUtil {
+public class DuplicatesRemover extends AbstractParsingUtil {
 
     @Override
     protected void performActions() {

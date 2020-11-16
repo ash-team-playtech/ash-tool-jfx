@@ -1,13 +1,13 @@
 package com.playtech.utils.services.font_fixer;
 
-import com.playtech.utils.services.AbstractUtil;
+import com.playtech.utils.services.AbstractParsingUtil;
 
 import java.util.ArrayList;
 
 /**
  * Tool for bulk change of xoffset/yoffset/xadvance parameters of bitmap font
  */
-public abstract class AbstractFontFixer extends AbstractUtil {
+public abstract class AbstractFontFixer extends AbstractParsingUtil {
 
     String configLineBeginning;
     String parametersSeparator;

@@ -1,6 +1,6 @@
 package com.playtech.utils.services.font_fixer;
 
-import com.playtech.utils.services.AbstractUtil;
+import com.playtech.utils.services.AbstractParsingUtil;
 import com.playtech.utils.services.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class FontFixerFactory implements Util {
     private GpasFontFixer gpasFontFixer;
 
     public AbstractFontFixer getFontFixer() {
-        FileType fileType = FileType.valueOf(getFileExtension(AbstractUtil.getFileName()));
+        FileType fileType = FileType.valueOf(getFileExtension(AbstractParsingUtil.getFileName()));
         return fileType.equals(FileType.FNT) ? ngmFontFixer : gpasFontFixer;
     }
 
