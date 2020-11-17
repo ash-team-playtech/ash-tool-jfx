@@ -20,7 +20,13 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <TextArea fx:id="resultsField" editable="false" prefHeight="170.0" prefWidth="500.0" />
+        <TableView fx:id="resultsTable" editable="true" prefHeight="175.0" prefWidth="500.0">
+            <columns>
+                <TableColumn fx:id="filePath" prefWidth="320.0" resizable="false" text="File path" />
+                <TableColumn fx:id="expectedDimension" editable="false" prefWidth="90.0" resizable="false" text="Expected size" />
+                <TableColumn fx:id="actualDimension" editable="false" prefWidth="90.0" resizable="false" text="Actual size" />
+            </columns>
+        </TableView>
     </VBox>
     <Button fx:id="startBtn" alignment="CENTER" disable="true" layoutX="230.0" layoutY="250.0" onAction="#start" text="Start" textAlignment="CENTER" />
 </Pane>

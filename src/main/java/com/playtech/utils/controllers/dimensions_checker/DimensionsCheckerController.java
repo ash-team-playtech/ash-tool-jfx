@@ -2,14 +2,18 @@ package com.playtech.utils.controllers.dimensions_checker;
 
 import com.playtech.utils.controllers.IController;
 import com.playtech.utils.controllers.status.StatusBarController;
+import com.playtech.utils.services.dimentions_checker.CustomDimension;
 import com.playtech.utils.services.dimentions_checker.DimensionsChecker;
+import com.playtech.utils.services.dimentions_checker.ProblematicImage;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,7 +32,10 @@ public class DimensionsCheckerController implements IController, Initializable {
     @FXML private Pane dimensionsChecker;
     @FXML private TextField projectDirectory;
     @FXML private Button chooseDirectoryBtn;
-    @FXML private TextArea resultsField;
+    @FXML private TableView<ProblematicImage> resultsTable;
+    @FXML private TableColumn<ProblematicImage, Path> filePath;
+    @FXML private TableColumn<ProblematicImage, CustomDimension> expectedDimension;
+    @FXML private TableColumn<ProblematicImage, CustomDimension> actualDimension;
     @FXML private Button startBtn;
 
     @Autowired
@@ -46,6 +54,9 @@ public class DimensionsCheckerController implements IController, Initializable {
                 statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_PROJECT_DIRECTORY);
             }
         });
+        filePath.setCellValueFactory(new PropertyValueFactory<>("filePath"));
+        expectedDimension.setCellValueFactory(new PropertyValueFactory<>("expectedDimension"));
+        actualDimension.setCellValueFactory(new PropertyValueFactory<>("actualDimension"));
     }
 
     @Override
@@ -59,7 +70,7 @@ public class DimensionsCheckerController implements IController, Initializable {
             executionThread.interrupt();
         }
         executionThread = new Thread(() -> {
-            List<String> results = dimensionsCheckerImpl.run();
+            List<ProblematicImage> results = dimensionsCheckerImpl.run();
             Platform.runLater(() -> {
                 projectDirectory.setDisable(false);
                 chooseDirectoryBtn.setDisable(false);
@@ -67,7 +78,7 @@ public class DimensionsCheckerController implements IController, Initializable {
                     statusBarController.setStatus(StatusBarController.Status.ALL_IMG_CORRECT);
                 } else {
                     statusBarController.setStatus(StatusBarController.Status.PROBLEMATIC_FILES_FOUND);
-                    resultsField.setText(String.join("\n", results));
+                    resultsTable.getItems().setAll(results);
                 }
             });
         });
@@ -77,7 +88,7 @@ public class DimensionsCheckerController implements IController, Initializable {
     @Override
     public void reset() {
         projectDirectory.clear();
-        resultsField.clear();
+        resultsTable.getItems().clear();
         startBtn.setDisable(true);
     }
 
