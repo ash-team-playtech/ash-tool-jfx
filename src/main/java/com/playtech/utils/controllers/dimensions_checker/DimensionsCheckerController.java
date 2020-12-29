@@ -34,7 +34,7 @@ public class DimensionsCheckerController implements IController, Initializable {
     @FXML private Button chooseDirectoryBtn;
     @FXML private TableView<ProblematicImage> resultsTable;
     @FXML private TableColumn<ProblematicImage, Path> filePath;
-    @FXML private TableColumn<ProblematicImage, CustomDimension> expectedDimension;
+    @FXML private TableColumn<ProblematicImage, CustomDimension> maxAllowedDimension;
     @FXML private TableColumn<ProblematicImage, CustomDimension> actualDimension;
     @FXML private Button startBtn;
 
@@ -55,8 +55,17 @@ public class DimensionsCheckerController implements IController, Initializable {
             }
         });
         filePath.setCellValueFactory(new PropertyValueFactory<>("filePath"));
-        expectedDimension.setCellValueFactory(new PropertyValueFactory<>("expectedDimension"));
+        maxAllowedDimension.setCellValueFactory(new PropertyValueFactory<>("maxAllowedDimension"));
         actualDimension.setCellValueFactory(new PropertyValueFactory<>("actualDimension"));
+
+        initFilePathColumn();
+    }
+
+    /** Used to fill all available space in the table by this column */
+    private void initFilePathColumn() {
+        double width = maxAllowedDimension.widthProperty().get();
+        width += actualDimension.widthProperty().get();
+        filePath.prefWidthProperty().bind(resultsTable.widthProperty().subtract(width));
     }
 
     @Override

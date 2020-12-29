@@ -39,9 +39,11 @@ public class App extends Application {
         stage.getIcons().add(new Image(icon.getURI().toString()));
         stage.setTitle(windowTitle);
         stage.setScene(new Scene(view.getView()));
-        stage.setResizable(false);
-        stage.centerOnScreen();
+        stage.sizeToScene();
         stage.show();
+        stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
+        stage.centerOnScreen();
     }
 
     @Override
