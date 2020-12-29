@@ -68,7 +68,7 @@ public class DimensionsChecker implements Util {
                     .forEach(path -> {
                         CustomDimension imageDim = getImageDim(path.toString());
                         CustomDimension maxAllowedDimension = mobileAssetsFolders.stream().anyMatch(path.toString()::contains) ? mobileDimensionLimit : desktopDimensionLimit;
-                        if (imageDim != null && imageDim.width > maxAllowedDimension.width && imageDim.height > maxAllowedDimension.height) {
+                        if (imageDim != null && (imageDim.width > maxAllowedDimension.width || imageDim.height > maxAllowedDimension.height)) {
                             problematicImages.add(new ProblematicImage(path, maxAllowedDimension, imageDim));
                         }
                     });
