@@ -23,7 +23,7 @@
         <TableView fx:id="resultsTable" editable="true" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="filePath" minWidth="-1.0" prefWidth="-1.0" resizable="false" text="File path" />
-                <TableColumn fx:id="maxAllowedDimension" editable="false" minWidth="90.0" prefWidth="90.0" resizable="false" text="Max size" />
+                <TableColumn fx:id="expectedDimension" editable="false" minWidth="90.0" prefWidth="90.0" resizable="false" text="Expected size" />
                 <TableColumn fx:id="actualDimension" editable="false" minWidth="90.0" prefWidth="90.0" resizable="false" text="Actual size" />
             </columns>
          <columnResizePolicy>

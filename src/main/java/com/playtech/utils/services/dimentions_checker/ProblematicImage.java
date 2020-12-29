@@ -5,12 +5,12 @@ import java.nio.file.Path;
 public class ProblematicImage {
 
     private Path filePath;
-    private CustomDimension maxAllowedDimension;
+    private CustomDimension expectedDimension;
     private CustomDimension actualDimension;
 
-    public ProblematicImage(Path filePath, CustomDimension maxAllowedDimension, CustomDimension actualDimension) {
+    public ProblematicImage(Path filePath, CustomDimension expectedDimension, CustomDimension actualDimension) {
         this.filePath = filePath;
-        this.maxAllowedDimension = maxAllowedDimension;
+        this.expectedDimension = expectedDimension;
         this.actualDimension = actualDimension;
     }
 
@@ -22,12 +22,12 @@ public class ProblematicImage {
         this.filePath = filePath;
     }
 
-    public CustomDimension getMaxAllowedDimension() {
-        return maxAllowedDimension;
+    public CustomDimension getExpectedDimension() {
+        return expectedDimension;
     }
 
-    public void setMaxAllowedDimension(CustomDimension maxAllowedDimension) {
-        this.maxAllowedDimension = maxAllowedDimension;
+    public void setExpectedDimension(CustomDimension expectedDimension) {
+        this.expectedDimension = expectedDimension;
     }
 
     public CustomDimension getActualDimension() {
