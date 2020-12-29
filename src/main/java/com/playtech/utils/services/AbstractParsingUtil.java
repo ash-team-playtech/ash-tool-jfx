@@ -92,6 +92,8 @@ public abstract class AbstractParsingUtil implements Util {
         filePath = null;
         fileName = null;
         override = false;
+        parsedLines.clear();
+        resultedLines.clear();
     }
 
     protected abstract void performActions();
