@@ -16,16 +16,13 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @Controller
 public class MainController implements Initializable {
 
     @Autowired
-    private ControllerFactory controllerFactory;
+    private List<IController> utilControllers;
 
     @Autowired
     @Lazy
@@ -42,8 +39,10 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         for (Node child : utilsContainer.getChildren()) {
             String id = child.getId();
-            Arrays.stream(UtilType.values()).filter(utilType -> utilType.getUtilId().equals(id))
-                    .findFirst().ifPresent(util -> utilContainers.put(util, (Pane) child));
+            Arrays.stream(UtilType.values())
+                    .filter(utilType -> utilType.getUtilId().equals(id))
+                    .findFirst()
+                    .ifPresent(util -> utilContainers.put(util, (Pane) child));
         }
         utilsChoiceBox.getItems().addAll(FXCollections.observableArrayList(UtilType.values()));
         utilsChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -60,7 +59,7 @@ public class MainController implements Initializable {
     }
 
     private void resetAllUtilContainers() {
-        controllerFactory.getAllControllers().forEach(IController::reset);
+        utilControllers.forEach(IController::reset);
     }
 
     @Bean

@@ -1,13 +1,11 @@
 package com.playtech.utils.services;
 
 public enum UtilType {
-    LINES_PARSER("linesParser", "Lines Parser"),
     FONT_FIXER("fontFixer", "Font Fixer"),
-    DIMENSIONS_CHECKER("dimensionsChecker", "Dimensions Checker"),
-    DUPLICATES_REMOVER("duplicatesRemover", "Duplicates Remover");
+    DIMENSIONS_CHECKER("dimensionsChecker", "Dimensions Checker");
 
-    private String utilId;
-    private String utilName;
+    private final String utilId;
+    private final String utilName;
 
     UtilType(String utilId, String utilName) {
         this.utilId = utilId;
