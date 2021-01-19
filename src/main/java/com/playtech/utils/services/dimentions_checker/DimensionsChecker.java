@@ -174,5 +174,6 @@ public class DimensionsChecker implements Util {
     @Override
     public void reset() {
         projectPath = null;
+        problematicImages.clear();
     }
 }

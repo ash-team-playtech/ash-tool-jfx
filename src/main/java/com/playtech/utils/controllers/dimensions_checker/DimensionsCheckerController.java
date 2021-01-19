@@ -98,6 +98,7 @@ public class DimensionsCheckerController implements IController, Initializable {
     public void reset() {
         projectDirectory.clear();
         resultsTable.getItems().clear();
+        dimensionsCheckerImpl.reset();
         startBtn.setDisable(true);
     }
 
@@ -106,8 +107,10 @@ public class DimensionsCheckerController implements IController, Initializable {
         reset();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(projectDirectory.getScene().getWindow());
-        projectDirectory.setText(selectedDirectory.getAbsolutePath());
-        dimensionsCheckerImpl.setProjectPath(selectedDirectory.getAbsolutePath());
-        startBtn.setDisable(false);
+        if (selectedDirectory != null) {
+            projectDirectory.setText(selectedDirectory.getAbsolutePath());
+            dimensionsCheckerImpl.setProjectPath(selectedDirectory.getAbsolutePath());
+            startBtn.setDisable(false);
+        }
     }
 }
