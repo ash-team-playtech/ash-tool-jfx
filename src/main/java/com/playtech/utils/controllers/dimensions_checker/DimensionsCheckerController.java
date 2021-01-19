@@ -54,6 +54,11 @@ public class DimensionsCheckerController implements IController, Initializable {
                 statusBarController.setStatus(StatusBarController.Status.WAITING_FOR_PROJECT_DIRECTORY);
             }
         });
+        projectDirectory.setOnKeyTyped(mouseEvent -> {
+            statusBarController.setStatus(StatusBarController.Status.PRESS_START_TO_CONTINUE);
+            startBtn.setDisable(false);
+        });
+
         filePath.setCellValueFactory(new PropertyValueFactory<>("filePath"));
         expectedDimension.setCellValueFactory(new PropertyValueFactory<>("expectedDimension"));
         actualDimension.setCellValueFactory(new PropertyValueFactory<>("actualDimension"));
@@ -70,46 +75,69 @@ public class DimensionsCheckerController implements IController, Initializable {
 
     @Override
     public void start(ActionEvent actionEvent) {
-        startBtn.setDisable(true);
-        projectDirectory.setDisable(true);
-        chooseDirectoryBtn.setDisable(true);
-        statusBarController.setStatus(StatusBarController.Status.PROCESSING);
+        clearPreviousResults();
+        changeUIState(false);
 
-        if (executionThread != null) {
-            executionThread.interrupt();
-        }
-        executionThread = new Thread(() -> {
-            List<ProblematicImage> results = dimensionsCheckerImpl.run();
-            Platform.runLater(() -> {
-                projectDirectory.setDisable(false);
-                chooseDirectoryBtn.setDisable(false);
-                if (results.isEmpty()) {
-                    statusBarController.setStatus(StatusBarController.Status.ALL_IMG_CORRECT);
-                } else {
-                    statusBarController.setStatus(StatusBarController.Status.PROBLEMATIC_FILES_FOUND);
-                    resultsTable.getItems().setAll(results);
-                }
+        if (isProjectDirectoryValid()) {
+            statusBarController.setStatus(StatusBarController.Status.PROCESSING);
+
+            if (executionThread != null) {
+                executionThread.interrupt();
+            }
+            executionThread = new Thread(() -> {
+                List<ProblematicImage> results = dimensionsCheckerImpl.run();
+                Platform.runLater(() -> {
+                    changeUIState(true);
+                    if (results.isEmpty()) {
+                        statusBarController.setStatus(StatusBarController.Status.ALL_IMG_CORRECT);
+                    } else {
+                        statusBarController.setStatus(StatusBarController.Status.PROBLEMATIC_FILES_FOUND);
+                        resultsTable.getItems().setAll(results);
+                    }
+                });
             });
-        });
-        executionThread.start();
+            executionThread.start();
+        }
+    }
+
+    private boolean isProjectDirectoryValid() {
+        String path = projectDirectory.getText();
+        File selectedDirectory = new File(path);
+        if (selectedDirectory.exists()) {
+            dimensionsCheckerImpl.setProjectPath(selectedDirectory.getAbsolutePath());
+            return true;
+        } else {
+            statusBarController.setStatus(StatusBarController.Status.INCORRECT_DIRECTORY);
+            changeUIState(true);
+            return false;
+        }
+    }
+
+    private void changeUIState(boolean enabled) {
+        projectDirectory.setDisable(!enabled);
+        chooseDirectoryBtn.setDisable(!enabled);
     }
 
     @Override
     public void reset() {
         projectDirectory.clear();
+        clearPreviousResults();
+    }
+
+    private void clearPreviousResults() {
         resultsTable.getItems().clear();
         dimensionsCheckerImpl.reset();
         startBtn.setDisable(true);
+        changeUIState(true);
     }
 
     @FXML
     private void chooseDirectory(ActionEvent actionEvent) {
-        reset();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(projectDirectory.getScene().getWindow());
         if (selectedDirectory != null) {
+            statusBarController.setStatus(StatusBarController.Status.PRESS_START_TO_CONTINUE);
             projectDirectory.setText(selectedDirectory.getAbsolutePath());
-            dimensionsCheckerImpl.setProjectPath(selectedDirectory.getAbsolutePath());
             startBtn.setDisable(false);
         }
     }
