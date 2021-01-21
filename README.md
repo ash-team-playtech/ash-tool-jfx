@@ -1,6 +1,6 @@
 # ASH-Tool (JavaFX)
 
-Helpful set of tools combined into one program which automates routines tasks and improves development efficiency.
+Helpful set of tools combined into one program which automates routine tasks and improves development efficiency.
 
 Used technologies: Java 14, Spring Boot, JavaFX
 
